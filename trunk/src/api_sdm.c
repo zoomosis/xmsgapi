@@ -1494,7 +1494,7 @@ static void MSGAPI Convert_Fmsg_To_Xmsg(struct _omsg *fmsg, XMSG * msg,
 
     /* Convert 4D pointnets */
 
-    if (fmsg->times == ~fmsg->cost && fmsg->times)
+    if (fmsg->times == (word) ~fmsg->cost && fmsg->times)
     {
         msg->orig.point = fmsg->times;
     }
