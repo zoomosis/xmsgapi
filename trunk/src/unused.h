@@ -1,8 +1,4 @@
 /*
- *  XMSGAPI; eXtended MsgAPI
- *
- *  Please refer to the file named LICENCE for copyright information.
- *
  *  unused.h
  *
  *  Suppress warning about unused parameter.  Written by Paul Edwards

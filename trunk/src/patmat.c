@@ -1,18 +1,8 @@
 /*
- *  XMSGAPI; eXtended MsgAPI
- *
- *  Please refer to the file named LICENCE for copyright information.
- *
  *  patmat.c
  *
  *  Pattern matching.  Taken from sh sources.
- */
-
-#include "compiler.h"
-
-#ifdef __UNIX__
-
-/*
+ *
  *  Copyright (c) 1991, 1993
  *  The Regents of the University of California.  All rights reserved.
  *
@@ -47,6 +37,10 @@
  *  OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  *  SUCH DAMAGE.
  */
+
+#include "compiler.h"
+
+#ifdef __UNIX__
 
 #include <string.h>
 #include "patmat.h"
