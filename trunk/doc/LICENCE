@@ -1,0 +1,109 @@
+XMSGAPI; eXtended MSGAPI
+Licence and Copyright
+
+
+XMSGAPI is primarily based on the Squish MsgAPI revision 0.0 (dated
+1991-11-17) and portions of the Squish Developers Kit 2.00 (dated
+1994-05-23) source code, both written by Scott J. Dudley.
+
+Modifications to the above code have been released to the public
+domain.
+
+The Squish MSGAPI0 is copyright 1991 by Scott J. Dudley.  All rights
+reserved.  The Squish Developers Kit Source, version 2.00 is copyright
+1989-1994 by SCI Communications.  All rights reserved. Maximus and
+Squish are trademarks of SCI Communications.
+
+Use of source code in the XMSGAPI is subject to the restrictions
+contained in the Squish MSGAPI0 and SQDEV200 licence agreements below.
+
+
+Squish MSGAPI0 Licence Agreement
+
+Squish MSGAPI0 is copyright 1991 by Scott J. Dudley.  All rights
+reserved. Squish, SquishMail and Maximus are trademarks of Scott J.
+Dudley.
+
+Although MSGAPI is copyrighted, you have been granted a limited licence
+modify or to use MSGAPI in your applications.  The only restrictions on
+the use of MsgAPI are:
+
+1) This code must not be sold.  Permission to post this file on "pay
+   BBSes" is granted, as long as no extra fee (above and beyond the
+   normal access charges) is required to download or access this code.
+      
+2) If you use this code in your application, you are required to give
+   credit for the MsgAPI code, and you must also indicate that "Squish"
+   is a trademark of Scott J. Dudley.
+	    
+3) If you modify this code, you must keep the message format compatible.
+   If my original MsgAPI code cannot read from AND write to message
+   areas created by your modified code, you may not label your
+   application as being compatible with the Squish message format.
+      
+   Aside from the above, there are few restrictions on the use of the
+   MSGAPI0 code.  As long as the above conditions are followed, MSGAPI
+   may be incorporated into any type of application, commercial or
+   freeware.
+
+
+Squish Developers Kit 2.00 Licence Agreement
+
+All of the source code, header files and documentation within the Squish
+Developers Kit is copyright 1991-1994 by  SCI Communications. All rights
+reserved.
+
+Distribution Policy
+
+Although the MsgAPI code is copyrighted, you are granted a limited
+license to modify or usr MsgAPI in your own applications.
+
+1) You may use the MsgAPI code as part of any type of application,
+including freeware, shareware, or commercial programs. No royalties or
+licensing fees are required.
+
+2) This code must not be sold on its own. While it  is permissible to
+sell an application that uses or contains the MsgAPI code, you may not
+charge any extra fee (above  the base cost of the product) for just
+providing the user with a copy of the Squish Developers kit.
+
+Also, you may not charge any extra fee (above the base cost of the
+product) for providing Squish base support within your program.
+
+3) If you use this code in your application, you must give credit for
+the MsgAPI code and indicate that "Squish"  is a trademark of SCI
+Communications.
+
+4) If you wish to identify your application as being compatible with the
+Squish message format, you must ensure that the original MsgAPI code is
+capable of reading and writing to the message bases that are created by
+your program. If the original MsgAPI code is unable to read the files
+created by your program, you may not label your program as Squish-
+compatible.
+
+As long as the above four conditions are followed, MsgAPI may be
+incorporated into any type of application without charge, regardless of
+the nature of the application (commercial, shareware, or freeware).
+
+No Warranty
+
+Because the Squish Developers Kit (SDK) is licensed free of charge, we
+provide absolutely no warranty. Except when otherwise stated in writing,
+SCI Communications and/or other parties provide the SDK "as is" without
+warranty of any kind, either expressed or implied, including, but not
+limited to, the implied warranties of merchantability and fitness for a 
+particular purpose. The entire risk as to the quality and performance of
+Squish, and the accuracy of its associated documentation, is with you.
+Should the SDK or its associated documentation  prove defective, you
+assume the cost of all necessary servicing, repair or correction.
+
+In no event will SCI Communications be responsible in any way for the
+behaviour of modified versions of the SDK. In no event will SCI
+Communications and/or any other party who may modify and redistribute
+SDK as permitted above, be liable to you for damages, including any lost
+profits, lost monies, or other special, incidental or consequential
+damages arising out of the use or inability to use (including but not
+limited to loss of data or data being rendered inaccurate or losses
+sustained by third parties or a failure of the program to operate with
+any other programs) the SDK, even if SCI Communications has been advised
+of the possibility of such damages, or for any claim by any other party.
