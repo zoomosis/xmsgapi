@@ -7,6 +7,11 @@
 #ifndef __STAMP_H__
 #define __STAMP_H__
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include <time.h>
 
 #include "typedefs.h"
@@ -61,5 +66,9 @@ union stamp_combo *Get_Dos_Date(union stamp_combo *st);
 struct tm *DosDate_to_TmDate(union stamp_combo *dosdate, struct tm *tmdate);
 union stamp_combo *TmDate_to_DosDate(struct tm *tmdate, union stamp_combo *dosdate);
 char *sc_time(union stamp_combo *sc, char *string);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

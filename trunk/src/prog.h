@@ -7,6 +7,11 @@
 #ifndef __PROG_H__
 #define __PROG_H__
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include <stdio.h>
 #include <time.h>
 #include "compiler.h"
@@ -31,6 +36,10 @@
 
 #ifndef min
 #define min(a,b)              (((a) < (b)) ? (a) : (b))
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif

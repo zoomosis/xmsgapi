@@ -7,6 +7,11 @@
 #ifndef __OLD_MSG_H__
 #define __OLD_MSG_H__
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "pack.h"
 
 struct _omsg
@@ -34,5 +39,9 @@ struct _omsg
 #include "unpack.h"
 
 #define OMSG_SIZE 190
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

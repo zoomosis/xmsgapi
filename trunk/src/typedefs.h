@@ -7,6 +7,11 @@
 #ifndef __TYPEDEFS_H__
 #define __TYPEDEFS_H__
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 typedef unsigned int bit;
 typedef unsigned char byte;
 typedef signed char sbyte;
@@ -34,6 +39,10 @@ typedef signed long sdword;
 #ifndef __UNIX__
 typedef unsigned short ushort;
 typedef unsigned long ulong;
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif
