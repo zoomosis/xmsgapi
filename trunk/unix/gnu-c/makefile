@@ -6,7 +6,7 @@
 CC=gcc
 CFLAGS=-pipe -W -Wall -c
 CDEFS=-DUNIX -DMSGAPI_NO_JAM
-COPT=-O2
+COPT=-O2 -g
 LIB=ar
 RANLIB=ranlib
 SRC_DIR=../../src

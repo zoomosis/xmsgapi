@@ -331,6 +331,18 @@ int SidxGet(HIDX hix, dword dwMsg, SQIDX * psqi)
 
     if (!psqiFound)
     {
+    	/* rebuffer the index */
+
+    	_SquishEndBuffer(hix);
+    	_SquishBeginBuffer(hix);
+
+        /* look again */
+
+        psqiFound = sidx(hix, dwMsg);
+    }
+
+    if (!psqiFound)
+    {
         return FALSE;
     }
 

@@ -573,7 +573,9 @@ static unsigned _SquishWriteXmsg(HMSG hmsg, PXMSG pxm, dword * pdwOfs)
         SQIDX sqi;
 
         if (SidxGet(HSqd->hix, hmsg->dwMsg, &sqi))
+        {
             hmsg->uidUs = sqi.umsgid;
+        }
     }
 
     /*
@@ -738,6 +740,9 @@ static unsigned _SquishWriteTxt(HMSG hmsg, unsigned fAppend, byte * szTxt,
 static unsigned _SquishUpdateIndex(HMSG hmsg, PXMSG pxm)
 {
     SQIDX sqi;
+    dword old_umsgid;
+
+    old_umsgid = pxm->umsgid;
 
     if (!SidxGet(HSqd->hix, hmsg->dwMsg, &sqi))
     {
@@ -751,6 +756,11 @@ static unsigned _SquishUpdateIndex(HMSG hmsg, PXMSG pxm)
 
     sqi.ofs = hmsg->foWrite;
     sqi.hash = SquishHash(pxm->to);
+
+    if (sqi.umsgid == 0)
+    {
+        sqi.umsgid = old_umsgid;
+    }
 
     /* If the message has been read, set the high bit of the hash */
 
