@@ -1,0 +1,83 @@
+2003-01-28 Tuesday 17:29  ozzmosis
+
+	* unix/gnu-c/makefile: added putword.o which was accidentally
+	left out and added -DUNIX.
+
+	* compiler.h: #ifdef __Linux__ changed to #ifdef __linux__.
+
+2003-01-28 Tuesday 17:29  ozzmosis
+
+	* VERSION moved to src/xmapiver.h.
+
+2003-01-27 Monday 09:03  ozzmosis
+
+	* "MSGA *sq" changed to "HAREA ha" in struct _msgh in msgapi.h as per
+	SQDEV200.  Other changes made accordingly.  This shouldn't break any
+	applications unless they access _msgh directly (they shouldn't).
+
+	* Added pragma to pack.h/unpack.h to stop Borland C++ 5.3 complaining
+	about structure	packing.
+
+	* SquishFillBaseHeader() optimised.  The basename is no longer written
+	to the .sqd file (there is no rationale for doing this and it only
+	adds confusion later if you rename the file).
+
+	* In SMAPI 2.x, the FTSC date field of a message would be generated
+	if none was present.  This is not the purpose of the field.  It
+	should only be filled when a message is tossed into the base, and
+	otherwise set to nul.  Squish applications should use the binary
+	timestamps (date_written and date_arrived) instead.  Please read
+	SQDEV.PRN (part of SQDEV200) for more information.  This code has
+	been removed from sq_write.c.
+
+	* Bug fix: changed "typedef int bits;" to "typedef unsigned int bits;"
+	for __TURBOC__ and moved to typedefs.h.  Changed "typedef int bit;"
+	to "typedef unsigned int bit;"
+
+	* XMSGAPI_VERSION define now located in src\..\VERSION.
+
+	* LITTLE_ENDIAN no longer assumed in GNU C UNIX makefile.
+
+	* Removed HISTORY file.
+
+	* XMSGAPI 1.5 released.
+
+2003-01-17 Friday 17:48  ozzmosis
+
+	* Don't panic!  Bug fix to NumKludges() in msgapi.c.
+
+	* XMSGAPI 1.2 released.
+
+2003-01-17 Friday 15:05  ozzmosis
+
+	* All compilers where support was planned are now supported.
+
+	* XMSGAPI 1.1 released.
+
+2003-01-15 Wednesday 01:31  ozzmosis
+
+	* typedef struct MSG renamed to MSGA.
+
+	* _get_osfhandle(3) returns -1 in MingW32.  This is probably a bug in
+	MingW32.  If it works for you, add -DFIXED_GET_OSFHANDLE to the CDEFS
+	part of the MingW32 makefile and recompile.
+
+2002-11-13 Wednesday 01:25  ozzmosis
+
+	* Watcom C (Win32) now supported too!
+
+2002-11-12 Tuesday 23:51  ozzmosis
+
+	* Digital Mars C is now supported.  The MingW32 port seems to have has
+	a broken waitlock2() causing it to call lock() infinitely.  I don't
+	know how to fix this.  A dummy function is in its place.
+
+2002-11-12 Tuesday 01:12  ozzmosis
+
+	* The project has "forked" and has been renamed to XMSGAPI
+	(eXtended MsgAPI).  Code changes have taken place to support
+	additional compilers and platforms.  Only a few compilers are
+	currently supported at this stage!  They are: Microsoft Visual C++
+	6.0, Microsoft Visual C++ 2.0, Intel C++ 6.0, Borland C++ Builder
+	3.0, Borland C++ 5.5.1 & GNU C (Cygwin).  Source files have been
+	cleaned up by hand & with "indent".

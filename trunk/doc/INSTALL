@@ -1,0 +1,68 @@
+XMSGAPI; eXtended MSGAPI
+Installation Notes
+
+Maintained by Andrew Clarke
+E-mail: mail@ozzmosis.com
+FidoNet: 3:633/267
+
+Please refer to the file named LICENCE for licencing and copyright
+information.
+
+
+Supported Compilers
+
+The following makefiles can be used to compile this release of XMSGAPI:
+
+Compiler                               Target       Makefile
+-------------------------------------- ------------ ------------------------
+Borland C++ (32-bit OS/2)              xmsgapi.lib  os232\borland\makefile
+Borland C++ (32-bit Windows)           xmsgapi.lib  win32\borland\makefile
+Digital Mars (32-bit Windows)          xmsgapi.lib  win32\digimars\makefile
+DJGPP 2.0                              xmsgapi.a    dos32\djgpp\makefile
+EMX 0.9 (32-bit OS/2)                  xmsgapi.a    os232\emx\makefile
+GNU C (Mingw) (32-bit Windows)         libxmsgapi.a win32\mingw32\makefile
+GNU C (UNIX or BeOS)                   libxmsgapi.a unix\gnu-c\makefile
+Intel C++ (32-bit Windows)             xmsgapi.lib  win32\intel\makefile
+lcc-win32 (32-bit Windows)             xmsgapi.lib  win32\lcc\makefile
+Metaware High C++                      xmsgapi.lib  os232\metaware\makefile
+Microsoft Visual C++ 2.0 (32-bit Win)  xmsgapi.lib  win32\msvc20\makefile
+Microsoft Visual C++ 6.0 (32-bit Win)  xmsgapi.lib  win32\msvc60\makefile
+Watcom C++ (32-bit DOS)                xmsgapi.lib  dos32\watcom\makefile
+Watcom C++ (32-bit OS/2)               xmsgapi.lib  os232\watcom\makefile
+Watcom C++ (32-bit Windows)            xmsgapi.lib  win32\watcom\makefile
+
+Notes
+
+- 16-bit DOS and 16-bit OS/2 will not be supported.
+
+- To compile XMSGAPI for UNIX or BeOS, the UNIX makefile and all related
+  source files should be in UNIX text file format (linefeeds only, no
+  carriage returns).  In particular, GNU C complains about carriage
+  returns in #if expressions that continue on from the previous line, ie.
+
+  #if defined(AAA) || \ <CR>
+    defined(BBB)
+
+- There is no makefile to generate a DLL version of XMSGAPI.  This may
+  be added in a future version.
+
+- For applications that do not require SDM support, you may define
+  MSGAPI_NO_SDM and recompile the library (remember to do "make clean"
+  first!).  Similarly, for applications that do not require Squish or JAM
+  support, you may define MSGAPI_NO_SQUISH or MSGAPI_NO_JAM
+  respectively.  This will result in a smaller library and consequently
+  a smaller executable.
+
+- JAM support has been disabled by default in this version due to
+  unresolved bugs and/or incomplete code in api_jam.c.  To reenable,
+  remove -DMSGAPI_NO_JAM from your makefile.  Use at own risk.  It may
+  corrupt your message base.
+
+
+Compiling
+
+To generate the XMSGAPI library for your compiler/platform, chdir to the
+appropriate directory run your make utility (called "make" for most
+environments; "nmake" for Microsoft; "wmake -ms" for Watcom).  If your
+C compiler or platform is unsupported, please contact the XMSGAPI
+maintainer.
