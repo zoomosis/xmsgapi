@@ -1,1 +1,1 @@
-#define XMSGAPI_VERSION "1.6"
+#define XMSGAPI_VERSION "1.7"
