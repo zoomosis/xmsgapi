@@ -358,7 +358,7 @@ static MSGH *SdmOpenMsg(MSGA * mh, word mode, dword msgnum)
     }
     else if (msgnum == MSGNUM_NEXT)
     {
-        msgnum = mh->num_msg + 1;
+        msgnum = mh->cur_msg + 1;
 
         if (msgnum > mh->num_msg)
         {
