@@ -9,8 +9,8 @@
  */
 
 #ifndef __UNIX__
-#if defined(__CYGWIN__) || defined(__linux__) || defined(__FreeBSD__) || \
-  defined (__BEOS__)
+#if defined(__unix__) || defined(__CYGWIN__) || defined(__linux__) || \
+  defined(__FreeBSD__) || defined (__BEOS__) || defined(__NetBSD__)
 #define __UNIX__ 1
 #endif
 #endif
