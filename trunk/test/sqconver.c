@@ -1,7 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#ifndef USE_SMAPI
 #include "prog.h"
+#endif
+
 #include "msgapi.h"
 
 #define BUFSIZE 4096
@@ -27,16 +31,16 @@ int main(int argc, char **argv)
 
     printf("Converting area %s...\n", argv[1]);
 
-    if (eqstri(argv[2], "*.msg"))
+    if (stricmp(argv[2], "*.msg"))
     {
         t1 = MSGTYPE_SDM;
     }
-    else if (eqstri(argv[2], "squish"))
+    else if (stricmp(argv[2], "squish"))
     {
         t1 = MSGTYPE_SQUISH;
     }
 #ifdef USE_JAM
-    else if (eqstri(argv[2], "jam"))
+    else if (stricmp(argv[2], "jam"))
     {
         t1 = MSGTYPE_JAM;
     }
@@ -61,16 +65,16 @@ int main(int argc, char **argv)
 
     MsgLock(in_area);
 
-    if (eqstri(argv[4], "*.msg"))
+    if (stricmp(argv[4], "*.msg"))
     {
         t2 = MSGTYPE_SDM;
     }
-    else if (eqstri(argv[4], "squish"))
+    else if (stricmp(argv[4], "squish"))
     {
         t2 = MSGTYPE_SQUISH;
     }
 #ifdef USE_JAM
-    else if (eqstri(argv[4], "jam"))
+    else if (stricmp(argv[4], "jam"))
     {
         t2 = MSGTYPE_JAM;
     }
