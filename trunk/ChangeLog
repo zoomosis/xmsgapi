@@ -1,3 +1,8 @@
+2003-02-21 11:44  ozzmosis
+
+	* ChangeLog, doc/ChangeLog, doc/ChangeLog.smapi: Added ChangeLog
+	using cvs2cl.pl.
+
 2003-02-21 01:59  ozzmosis
 
 	* src/xmapiver.h: Updated version number to 1.7.
