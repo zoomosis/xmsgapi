@@ -4,7 +4,7 @@
 CC=cl
 CFLAGS=-nologo -W3
 CDEFS=-D__LITTLE_ENDIAN__-DWIN32 -DMSGAPI_NO_JAM
-COPT=-Ox -MD -Gf
+COPT=-Ox -Gf
 LIB=lib
 SRC_DIR=..\..\src
 TARGET=xmsgapi.lib
