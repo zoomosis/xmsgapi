@@ -2,11 +2,11 @@
 # Borland C++ 5.x (32-bit Windows)
 
 CC=bcc32
-CFLAGS=-w -WC -w-8059
+CFLAGS=-w -WM -w-8059
 CDEFS=-D__LITTLE_ENDIAN__ -DMSGAPI_NO_JAM
 #CDEFS=-DMSGAPI_NO_JAM
-COPT=-O2 -d
-#COPT=-v -y
+#COPT=-O2 -d
+COPT=-v -y
 LIB=tlib
 SRC_DIR=..\..\src
 TARGET=xmsgapi.lib
