@@ -1,7 +1,11 @@
 /*
  *  XMSGAPI; eXtended MsgAPI
  *
- *  Please refer to the file named LICENCE for copyright information.
+ *  Based on the Squish MsgAPI written by Scott Dudley.
+ *
+ *  This source code is free software and distributed under the GNU Lesser
+ *  General Public License.  Please refer to the file named LICENCE for
+ *  copyright information.
  */
 
 #ifndef __OSDEP_H__

@@ -1,9 +1,3 @@
-/*
- *  XMSGAPI; eXtended MsgAPI
- *
- *  Please refer to the file named LICENCE for copyright information.
- */
-
 #include <stdio.h>
 #include "prog.h"
 #include "qksort.h"

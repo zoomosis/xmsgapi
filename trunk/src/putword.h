@@ -1,9 +1,3 @@
-/*
- *  XMSGAPI; eXtended MsgAPI
- *
- *  Please refer to the file named LICENCE for copyright information.
- */
-
 #ifndef __PUTWORD_H__
 #define __PUTWORD_H__
 
