@@ -24,6 +24,13 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+#include "compiler.h"
+#include "putword.h"
+#include "prog.h"
+#include "osdep.h"
+#include "msgapi.h"
+#include "unused.h"
+
 #ifdef __UNIX__
 #include <unistd.h>
 #else
@@ -31,13 +38,7 @@
 #include <share.h>
 #endif
 
-#include "ffind.h"
-#include "prog.h"
-#include "stamp.h"
-#include "msgapi.h"
-#include "progprot.h"
 #include "api_jam.h"
-#include "unused.h"
 
 static sword JamCloseArea(MSGA * jm);
 static MSGH *JamOpenMsg(MSGA * jm, word mode, dword msgnum);
