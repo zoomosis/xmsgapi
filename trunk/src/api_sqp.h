@@ -9,6 +9,11 @@
 #ifndef __API_SQP_H__
 #define __API_SQP_H__
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 sword apiSquishCloseArea(HAREA sq);
 HMSG apiSquishOpenMsg(HAREA sq, word mode, dword msgnum);
 sword apiSquishCloseMsg(HMSG msgh);
@@ -57,5 +62,9 @@ int _SquishEndBuffer(HIDX hix);
 int _SquishFreeBuffer(HIDX hix);
 dword _SquishIndexSize(HIDX hix);
 unsigned _SquishFixMemoryPointers(HAREA ha, dword dwMsg, SQHDR * psqh);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

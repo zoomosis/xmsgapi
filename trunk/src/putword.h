@@ -7,6 +7,11 @@
 #ifndef __PUTWORD_H__
 #define __PUTWORD_H__
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "typedefs.h"
 
 /*
@@ -45,6 +50,10 @@ void put_dword(byte * ptr, dword value);
   (word) ((word)((byte)(ptr)[0]) | \
   (((word)((byte)(ptr)[1])) << 8 ))
 
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif

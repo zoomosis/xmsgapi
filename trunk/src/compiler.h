@@ -8,6 +8,11 @@
  *  Determines compiler and platform.
  */
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #ifndef __UNIX__
 #if defined(__unix__) || defined(__CYGWIN__) || defined(__linux__) || \
   defined(__FreeBSD__) || defined (__BEOS__) || defined(__NetBSD__)
@@ -76,4 +81,8 @@
 #ifndef SH_DENYNONE
 #define SH_DENYNONE  SH_DENYNO
 #endif
+#endif
+
+#ifdef __cplusplus
+}
 #endif

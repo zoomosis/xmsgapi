@@ -7,6 +7,11 @@
 #ifndef __OSDEP_H__
 #define __OSDEP_H__
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include <stdio.h>
 
 #include "compiler.h"
@@ -124,9 +129,13 @@ void tdelay(int msecs);
 int waitlock(int handle, long ofs, long length);
 int waitlock2(int handle, long ofs, long length, long t);
 
-#ifndef __WATCOMC__
+#ifndef WIN32
 int lock(int handle, long ofs, long length);
 int unlock(int handle, long ofs, long length);
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif

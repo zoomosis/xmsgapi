@@ -11,6 +11,11 @@
 #ifndef __API_SDM_H__
 #define __API_SDM_H__
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "pack.h"
 
 struct _msgh
@@ -52,5 +57,9 @@ struct _sdmdata
 #include "unpack.h"
 
 int WriteZPInfo(XMSG * msg, void (* wfunc) (byte * str), byte * kludges);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

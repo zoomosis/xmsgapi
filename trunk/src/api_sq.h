@@ -9,6 +9,11 @@
 #ifndef __API_SQ_H__
 #define __API_SQ_H__
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "compiler.h"
 
 struct _sqhdr;
@@ -259,5 +264,9 @@ struct _msgh
 #define SQHDR_SIZE  28
 #define SQIDX_SIZE  12
 #define SQBASE_SIZE 256
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
