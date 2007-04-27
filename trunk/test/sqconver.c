@@ -31,16 +31,16 @@ int main(int argc, char **argv)
 
     printf("Converting area %s...\n", argv[1]);
 
-    if (stricmp(argv[2], "*.msg"))
+    if (stricmp(argv[2], "*.msg") == 0)
     {
         t1 = MSGTYPE_SDM;
     }
-    else if (stricmp(argv[2], "squish"))
+    else if (stricmp(argv[2], "squish") == 0)
     {
         t1 = MSGTYPE_SQUISH;
     }
 #ifdef USE_JAM
-    else if (stricmp(argv[2], "jam"))
+    else if (stricmp(argv[2], "jam") == 0)
     {
         t1 = MSGTYPE_JAM;
     }
@@ -65,16 +65,16 @@ int main(int argc, char **argv)
 
     MsgLock(in_area);
 
-    if (stricmp(argv[4], "*.msg"))
+    if (stricmp(argv[4], "*.msg") == 0)
     {
         t2 = MSGTYPE_SDM;
     }
-    else if (stricmp(argv[4], "squish"))
+    else if (stricmp(argv[4], "squish") == 0)
     {
         t2 = MSGTYPE_SQUISH;
     }
 #ifdef USE_JAM
-    else if (stricmp(argv[4], "jam"))
+    else if (stricmp(argv[4], "jam") == 0)
     {
         t2 = MSGTYPE_JAM;
     }
