@@ -881,12 +881,13 @@ static int write_omsg(int handle, struct _omsg *pomsg)
     pbuf += 2;
 
     /* 4 bytes "date_written" */
-    rawdate = rawtime = 0;
 
+    rawdate = 0;
     rawdate |= (word) (((word) pomsg->date_written.date.da) & 31);
     rawdate |= (word) ((((word) pomsg->date_written.date.mo) & 15) << 5);
     rawdate |= (word) ((((word) pomsg->date_written.date.yr) & 127) << 9);
 
+    rawtime = 0;
     rawtime |= (word) (((word) pomsg->date_written.time.ss) & 31);
     rawtime |= (word) ((((word) pomsg->date_written.time.mm) & 63) << 5);
     rawtime |= (word) ((((word) pomsg->date_written.time.hh) & 31) << 11);
@@ -897,13 +898,14 @@ static int write_omsg(int handle, struct _omsg *pomsg)
     put_word(pbuf, rawtime);
     pbuf += 2;
 
-    /* 4 bytes "date_arrvied" */
-    rawdate = rawtime = 0;
+    /* 4 bytes "date_arrived" */
 
+    rawdate = 0;
     rawdate |= (word) (((word) pomsg->date_arrived.date.da) & 31);
     rawdate |= (word) ((((word) pomsg->date_arrived.date.mo) & 15) << 5);
     rawdate |= (word) ((((word) pomsg->date_arrived.date.yr) & 127) << 9);
 
+    rawtime = 0;
     rawtime |= (word) (((word) pomsg->date_arrived.time.ss) & 31);
     rawtime |= (word) ((((word) pomsg->date_arrived.time.mm) & 63) << 5);
     rawtime |= (word) ((((word) pomsg->date_arrived.time.hh) & 31) << 11);
