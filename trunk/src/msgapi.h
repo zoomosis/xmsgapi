@@ -56,34 +56,34 @@ extern "C"
 
 #define FILEMODE(a) ((a) ? FILEMODE_ECHOMAIL : FILEMODE_NETMAIL)
 
-    struct _msgapi;
-    struct _msgh;
-    struct _xmsg;
-    struct _netaddr;
+struct _msgapi;
+struct _msgh;
+struct _xmsg;
+struct _netaddr;
 
-    typedef struct _msgapi MSGA;
-    typedef struct _msgapi *HAREA;
-    typedef struct _msgh MSGH;
-    typedef struct _msgh *HMSG;
-    typedef struct _xmsg *PXMSG;
-    typedef struct _netaddr NETADDR;
-    typedef NETADDR *PNETADDR;
-    typedef dword UMSGID;
+typedef struct _msgapi MSGA;
+typedef struct _msgapi *HAREA;
+typedef struct _msgh MSGH;
+typedef struct _msgh *HMSG;
+typedef struct _xmsg *PXMSG;
+typedef struct _netaddr NETADDR;
+typedef NETADDR *PNETADDR;
+typedef dword UMSGID;
 
 #define MSGAPI_VERSION    2
 #define MSGAPI_SUBVERSION 0x210
 
-    struct _minf
-    {
-        word req_version;
-        word def_zone;
-        word haveshare;  /* set by MsgAPI routines */
+struct _minf
+{
+    word req_version;
+    word def_zone;
+    word haveshare;  /* set by MsgAPI routines */
 
-        /* Version 2 Information */
+    /* Version 2 Information */
 
-        word xmsgapi_version;
-        word xmsgapi_subversion;
-    };
+    word xmsgapi_version;
+    word xmsgapi_subversion;
+};
 
 /*
  *  The network address structure.  The zone/net/node/point fields are
@@ -94,13 +94,13 @@ extern "C"
  *  should be in the format "1:123/456.7" for Fido addresses.
  */
 
-    struct _netaddr
-    {
-        word zone;
-        word net;
-        word node;
-        word point;
-    };
+struct _netaddr
+{
+    word zone;
+    word net;
+    word node;
+    word point;
+};
 
 /*
  *  The eXtended message structure.  Translation between this structure,
@@ -108,9 +108,9 @@ extern "C"
  *  on-the-fly by the API routines.
  */
 
-    typedef struct _xmsg
-    {
-        /* Bitmasks for 'attr' */
+typedef struct _xmsg
+{
+/* Bitmasks for 'attr' */
 
 #define MSGPRIVATE 0x0001
 #define MSGCRASH   0x0002
@@ -137,46 +137,46 @@ extern "C"
 
 #define MSGLOCKED  0x40000000L  /* this seems to be a feature of GoldED  */
 
-        dword attr;
+    dword attr;
 
 #define XMSG_FROM_SIZE  36
 #define XMSG_TO_SIZE    36
 #define XMSG_SUBJ_SIZE  72
 
-        byte from[XMSG_FROM_SIZE];
-        byte to[XMSG_TO_SIZE];
-        byte subj[XMSG_SUBJ_SIZE];
+    byte from[XMSG_FROM_SIZE];
+    byte to[XMSG_TO_SIZE];
+    byte subj[XMSG_SUBJ_SIZE];
 
-        NETADDR orig;           /* Origination and destination addresses */
-        NETADDR dest;
+    NETADDR orig;           /* Origination and destination addresses */
+    NETADDR dest;
 
-        struct _stamp date_written;  /* When user wrote the msg (UTC) */
-        struct _stamp date_arrived;  /* When msg arrived on-line (UTC) */
+    struct _stamp date_written;  /* When user wrote the msg (UTC) */
+    struct _stamp date_arrived;  /* When msg arrived on-line (UTC) */
 
-        sword utc_ofs;  /* Offset from UTC of message writer, in minutes. */
+    sword utc_ofs;  /* Offset from UTC of message writer, in minutes. */
 
 #define MAX_REPLY 9  /* Max number of stored replies to one msg */
 
-        UMSGID replyto;
-        UMSGID replies[MAX_REPLY];
+    UMSGID replyto;
+    UMSGID replies[MAX_REPLY];
 
-        dword umsgid;  /* UMSGID of this message, if (attr & MSGUID) */
+    dword umsgid;  /* UMSGID of this message, if (attr & MSGUID) */
 
-        /* This field is only stored on disk -- it is not read into memory. */
+    /* This field is only stored on disk -- it is not read into memory. */
 
-        /*
-         *  Obsolete date information.  If it weren't for the fact that FTSC
-         *  standards say that one cannot modify an in-transit message, I'd
-         *  be VERY tempted to axe this field entirely, and recreate an
-         *  FTSC-compatible date field using the information in 'date_written'
-         *  upon export.  Nobody should use this field, except possibly for
-         *  tossers and scanners.  All others should use one of the two
-         *  binary datestamps, above.
-         */
+    /*
+     *  Obsolete date information.  If it weren't for the fact that FTSC
+     *  standards say that one cannot modify an in-transit message, I'd
+     *  be VERY tempted to axe this field entirely, and recreate an
+     *  FTSC-compatible date field using the information in 'date_written'
+     *  upon export.  Nobody should use this field, except possibly for
+     *  tossers and scanners.  All others should use one of the two
+     *  binary datestamps, above.
+     */
 
-        byte __ftsc_date[20];
-    }
-    XMSG;
+    byte __ftsc_date[20];
+}
+XMSG;
 
 #define XMSG_SIZE (94 + XMSG_FROM_SIZE + XMSG_TO_SIZE + XMSG_SUBJ_SIZE)
 
@@ -192,68 +192,71 @@ extern "C"
  *  directly.
  */
 
-    struct _msgapi
-    {
+struct _msgapi
+{
 #define MSGAPI_ID   0x0201414DL
 
-        dword id;               /* Must always equal MSGAPI_ID */
+    dword id;               /* Must always equal MSGAPI_ID */
 
-        word len;               /* Length of this structure */
-        word type;
+    word len;               /* Length of this structure */
+    word type;
 
-        dword num_msg;
-        dword cur_msg;
-        dword high_msg;
-        dword high_water;
+    dword num_msg;
+    dword cur_msg;
+    dword high_msg;
+    dword high_water;
 
-        word sz_xmsg;
+    word sz_xmsg;
 
-        byte locked;            /* Base is locked from use by other tasks */
-        byte isecho;            /* Is this an EchoMail area? */
+    byte locked;            /* Base is locked from use by other tasks */
+    byte isecho;            /* Is this an EchoMail area? */
 
-        /* Function pointers for manipulating messages within this area. */
+    /* Function pointers for manipulating messages within this area. */
 
-        struct _apifuncs
-        {
-            sword(* CloseArea) (HAREA mh);
-            MSGH *(* OpenMsg) (HAREA mh, word mode, dword n);
-             sword(* CloseMsg) (MSGH * msgh);
-             dword(* ReadMsg) (MSGH * msgh, XMSG * msg, dword ofs, dword bytes, byte * text, dword cbyt, byte * ctxt);
-             sword(* WriteMsg) (MSGH * msgh, word append, XMSG * msg, byte * text, dword textlen, dword totlen, dword clen, byte * ctxt);
-             sword(* KillMsg) (HAREA mh, dword msgnum);
-             sword(* Lock) (HAREA mh);
-             sword(* Unlock) (HAREA mh);
-             sword(* SetCurPos) (MSGH * msgh, dword pos);
-             dword(* GetCurPos) (MSGH * msgh);
-             UMSGID(* MsgnToUid) (HAREA mh, dword msgnum);
-             dword(* UidToMsgn) (HAREA mh, UMSGID umsgid, word type);
-             dword(* GetHighWater) (HAREA mh);
-             sword(* SetHighWater) (HAREA mh, dword hwm);
-             dword(* GetTextLen) (MSGH * msgh);
-             dword(* GetCtrlLen) (MSGH * msgh);
+    struct _apifuncs
+    {
+        sword(* CloseArea) (HAREA mh);
+        MSGH *(* OpenMsg) (HAREA mh, word mode, dword n);
+        sword(* CloseMsg) (MSGH * msgh);
+        dword(* ReadMsg) (MSGH * msgh, XMSG * msg, dword ofs, dword bytes, byte * text, dword cbyt, byte * ctxt);
+        sword(* WriteMsg) (MSGH * msgh, word append, XMSG * msg, byte * text,
+			   dword textlen, dword totlen, dword clen, byte * ctxt);
+        sword(* KillMsg) (HAREA mh, dword msgnum);
+        sword(* Lock) (HAREA mh);
+        sword(* Unlock) (HAREA mh);
+        sword(* SetCurPos) (MSGH * msgh, dword pos);
+        dword(* GetCurPos) (MSGH * msgh);
+        UMSGID(* MsgnToUid) (HAREA mh, dword msgnum);
+        dword(* UidToMsgn) (HAREA mh, UMSGID umsgid, word type);
+        dword(* GetHighWater) (HAREA mh);
+        sword(* SetHighWater) (HAREA mh, dword hwm);
+        dword(* GetTextLen) (MSGH * msgh);
+        dword(* GetCtrlLen) (MSGH * msgh);
 
-             /* Version 1 Functions */
-             UMSGID(* GetNextUid) (HAREA harea);
+        /* Version 1 Functions */
 
-             /* Version 2 Functions */
-             dword(* GetHash) (HAREA harea, dword msgnum);
-        }
-        *api;
+	UMSGID(* GetNextUid) (HAREA harea);
 
-        /* 
-         *  Pointer to application-specific data.  API_SQ.C and API_SDM.C use
-         *  this for different things, so again, no applications should muck
-         *  with anything in here.
-         */
+        /* Version 2 Functions */
+             
+	dword(* GetHash) (HAREA harea, dword msgnum);
+    }
+    *api;
 
-        void *apidata;
+    /* 
+     *  Pointer to application-specific data.  API_SQ.C and API_SDM.C use
+     *  this for different things, so again, no applications should muck
+     *  with anything in here.
+     */
+
+    void *apidata;
 
 
 #ifdef ALTLOCKING
-        char *lck_path;
-        int lck_handle;
+    char *lck_path;
+    int lck_handle;
 #endif
-    };
+};
 
 
 /*
@@ -266,14 +269,13 @@ extern "C"
 #define MSGH_ID  0x0302484DL
 
 #if !defined(MSGAPI_HANDLERS) && !defined(NO_MSGH_DEF)
-    struct _msgh
-    {
-        HAREA ha;
-        dword id;
-
-        dword bytes_written;
-        dword cur_pos;
-    };
+struct _msgh
+{
+    HAREA ha;
+    dword id;
+    dword bytes_written;
+    dword cur_pos;
+};
 #endif
 
 #include "api_brow.h"
@@ -283,9 +285,9 @@ extern "C"
  *  functions.  If msgapierr == 0, then no error occurred.
  */
 
-    extern word msgapierr;
+extern word msgapierr;
 
-    extern struct _minf mi;
+extern struct _minf mi;
 
 /* Constants for 'type' argument of MsgUidToMsgn() */
 
@@ -360,43 +362,45 @@ extern "C"
 
 #define MsgCvtFTSCDateToBinary(a, b) ASCII_Date_To_Binary(a,b)
 
-    sword MsgOpenApi(struct _minf *minf);
-    sword MsgCloseApi(void);
+sword MsgOpenApi(struct _minf *minf);
+sword MsgCloseApi(void);
 
-    MSGA *MsgOpenArea(byte * name, word mode, word type);
-    int MsgDeleteBase(char *name, word type);
-    sword MsgValidate(word type, byte * name);
-    sword MsgBrowseArea(BROWSE * b);
+MSGA *MsgOpenArea(byte * name, word mode, word type);
+int MsgDeleteBase(char *name, word type);
+sword MsgValidate(word type, byte * name);
+sword MsgBrowseArea(BROWSE * b);
 
-    sword MSGAPI InvalidMsgh(MSGH * msgh);
-    sword MSGAPI InvalidMh(MSGA * mh);
+sword MSGAPI InvalidMsgh(MSGH * msgh);
+sword MSGAPI InvalidMh(MSGA * mh);
 
-    void SquishSetMaxMsg(MSGA * sq, dword max_msgs, dword skip_msgs, dword age);
-    dword SquishHash(byte * f);
+void SquishSetMaxMsg(MSGA * sq, dword max_msgs, dword skip_msgs, dword age);
+dword SquishHash(byte * f);
 
-    MSGA *MSGAPI SdmOpenArea(byte * name, word mode, word type);
-    sword MSGAPI SdmValidate(byte * name);
-    int SdmDeleteBase(char *name);
+MSGA *MSGAPI SdmOpenArea(byte * name, word mode, word type);
+sword MSGAPI SdmValidate(byte * name);
+int SdmDeleteBase(char *name);
 
-    MSGA *MSGAPI SquishOpenArea(byte * name, word mode, word type);
-    sword MSGAPI SquishValidate(byte * name);
-    int SquishDeleteBase(char *name);
+MSGA *MSGAPI SquishOpenArea(byte * name, word mode, word type);
+sword MSGAPI SquishValidate(byte * name);
+int SquishDeleteBase(char *name);
 
 #ifndef MSGAPI_NO_JAM
-    MSGA *MSGAPI JamOpenArea(byte * name, word mode, word type);
-    sword MSGAPI JamValidate(byte * name);
-    int JamDeleteBase(char *name);
+
+MSGA *MSGAPI JamOpenArea(byte * name, word mode, word type);
+sword MSGAPI JamValidate(byte * name);
+int JamDeleteBase(char *name);
+
 #endif
 
-    byte *CvtCtrlToKludge(byte * ctrl);
-    byte *GetCtrlToken(byte * where, byte * what);
-    byte *CopyToControlBuf(byte * txt, byte ** newtext, unsigned *length);
-    void ConvertControlInfo(byte * ctrl, NETADDR * orig, NETADDR * dest);
-    word NumKludges(char *txt);
-    void RemoveFromCtrl(byte * ctrl, byte * what);
+byte *CvtCtrlToKludge(byte * ctrl);
+byte *GetCtrlToken(byte * where, byte * what);
+byte *CopyToControlBuf(byte * txt, byte ** newtext, unsigned *length);
+void ConvertControlInfo(byte * ctrl, NETADDR * orig, NETADDR * dest);
+word NumKludges(char *txt);
+void RemoveFromCtrl(byte * ctrl, byte * what);
 
-    byte *Address(NETADDR * a);
-    byte *StripNasties(byte * str);
+byte *Address(NETADDR * a);
+byte *StripNasties(byte * str);
 
 extern char months[][10];
 extern char months_ab[][4];
