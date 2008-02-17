@@ -256,7 +256,7 @@ static int copy_subfield(JAMSUBFIELD2LISTptr * to, JAMSUBFIELD2LISTptr from)
 {
     dword i;
 
-    *to = palloc(from->arraySize);
+    *to = malloc(from->arraySize);
     if (*to == NULL)
         return 1;
     memcpy(*to, from, from->arraySize);
@@ -273,7 +273,7 @@ static int write_subfield(int handle, JAMSUBFIELD2LISTptr * subfield, dword Subf
     dword i;
     JAMSUBFIELD2ptr subfieldNext;
 
-    buf = (unsigned char *)palloc(SubfieldLen);
+    buf = (unsigned char *)malloc(SubfieldLen);
     pbuf = buf;
     subfieldNext = &(subfield[0]->subfield[0]);
 
@@ -299,7 +299,7 @@ static int write_subfield(int handle, JAMSUBFIELD2LISTptr * subfield, dword Subf
 
     rc = ((dword) write(handle, (byte *) buf, SubfieldLen) == SubfieldLen);
 
-    pfree(buf);
+    free(buf);
 
     return rc;
 }
@@ -406,7 +406,7 @@ static void decode_subfield(byte * buf, JAMSUBFIELD2LISTptr * subfield, dword * 
         pbuf += get_dword(pbuf + 4) + sizeof(JAMBINSUBFIELD);
     }
     len = sizeof(JAMSUBFIELD2LIST) + i * (sizeof(JAMSUBFIELD2) - sizeof(JAMBINSUBFIELD) + 1) + *SubfieldLen;
-    *subfield = palloc(len);
+    *subfield = malloc(len);
     subfield[0]->arraySize = len;
     subfield[0]->subfieldCount = 0;
     subfield[0]->subfield[0].Buffer = (byte *) & (subfield[0]->subfield[i + 1]);
@@ -457,17 +457,17 @@ static int read_subfield(int handle, JAMSUBFIELD2LISTptr * subfield, dword * Sub
 {
     char *buf;
 
-    buf = (char *)palloc(*SubfieldLen);
+    buf = (char *)malloc(*SubfieldLen);
 
     if ((dword) read(handle, (byte *) buf, *SubfieldLen) != *SubfieldLen)
     {
-        pfree(buf);
+        free(buf);
         return 0;
     }
 
     decode_subfield((byte *) buf, subfield, SubfieldLen);
 
-    pfree(buf);
+    free(buf);
 
     return 1;
 }
@@ -581,12 +581,12 @@ static int read_allidx(JAMBASEptr jmb)
     len = tell(jmb->IdxHandle);
     lseek(jmb->IdxHandle, 0, SEEK_SET);
 
-    buf = (byte *) palloc(len);
+    buf = (byte *) malloc(len);
     pbuf = buf;
 
     if (read(jmb->IdxHandle, (byte *) buf, len) != len)
     {
-        pfree(buf);
+        free(buf);
         return 0;
     }
 
@@ -596,12 +596,12 @@ static int read_allidx(JAMBASEptr jmb)
     if (hlen < MAXHDRINCORE)
     {
         /* read all headers in core */
-        hdrbuf = (byte *) palloc(hlen);
+        hdrbuf = (byte *) malloc(hlen);
 
         if ((dword) read(jmb->HdrHandle, (byte *) hdrbuf, hlen) != hlen)
         {
-            pfree(hdrbuf);
-            pfree(buf);
+            free(hdrbuf);
+            free(buf);
             return 0;
         }
 
@@ -619,8 +619,8 @@ static int read_allidx(JAMBASEptr jmb)
         if (jmb->actmsg == NULL)
         {
             if (hdrbuf)
-                pfree(hdrbuf);
-            pfree(buf);
+                free(hdrbuf);
+            free(buf);
             return 0;
         }
     }
@@ -646,10 +646,10 @@ static int read_allidx(JAMBASEptr jmb)
                         newptr = (JAMACTMSGptr) realloc(jmb->actmsg, sizeof(JAMACTMSG) * (allocated += 16));
                         if (newptr == NULL)
                         {
-                            pfree(jmb->actmsg);
+                            free(jmb->actmsg);
                             if (hdrbuf)
-                                pfree(hdrbuf);
-                            pfree(buf);
+                                free(hdrbuf);
+                            free(buf);
                             return 0;
                         }
                         jmb->actmsg = newptr;
@@ -671,11 +671,11 @@ static int read_allidx(JAMBASEptr jmb)
         pbuf += 8;
     }
 
-    pfree(buf);
+    free(buf);
 
     if (hdrbuf)
     {
-        pfree(hdrbuf);
+        free(hdrbuf);
     }
 
     if (i != jmb->HdrInfo.ActiveMsgs)
@@ -698,14 +698,14 @@ static int read_allidx(JAMBASEptr jmb)
 static void freejamsubfield(JAMSUBFIELD2LIST * subfield)
 {
     if (subfield)
-        pfree(subfield);
+        free(subfield);
 }
 
 MSGA *MSGAPI JamOpenArea(byte * name, word mode, word type)
 {
     MSGA *jm;
 
-    jm = palloc(sizeof(MSGA));
+    jm = malloc(sizeof(MSGA));
     if (jm == NULL)
     {
         msgapierr = MERR_NOMEM;
@@ -724,23 +724,23 @@ MSGA *MSGAPI JamOpenArea(byte * name, word mode, word type)
     if (type & MSGTYPE_NOTH)
         jm->isecho = NOTH;
 
-    jm->api = (struct _apifuncs *)palloc(sizeof(struct _apifuncs));
+    jm->api = (struct _apifuncs *)malloc(sizeof(struct _apifuncs));
     if (jm->api == NULL)
     {
         msgapierr = MERR_NOMEM;
-        pfree(jm);
+        free(jm);
         return NULL;
     }
 
     memset(jm->api, '\0', sizeof(struct _apifuncs));
 
-    jm->apidata = (void *)palloc(sizeof(JAMBASE));
+    jm->apidata = (void *)malloc(sizeof(JAMBASE));
 
     if (jm->apidata == NULL)
     {
         msgapierr = MERR_NOMEM;
-        pfree(jm->api);
-        pfree(jm);
+        free(jm->api);
+        free(jm);
         return NULL;
     }
 
@@ -754,9 +754,9 @@ MSGA *MSGAPI JamOpenArea(byte * name, word mode, word type)
 
     if (!Jam_OpenBase(jm, &mode, name))
     {
-        pfree(jm->api);
-        pfree((char *)jm->apidata);
-        pfree(jm);
+        free(jm->api);
+        free((char *)jm->apidata);
+        free(jm);
         msgapierr = MERR_BADF;
         return NULL;
     }
@@ -801,17 +801,17 @@ static sword JamCloseArea(MSGA * jm)
 
     Jam_CloseFile(Jmd);
 
-    pfree(Jmd->BaseName);
+    free(Jmd->BaseName);
     if (Jmd->actmsg)
     {
         for (i = 0; i < Jmd->HdrInfo.ActiveMsgs; i++)
             freejamsubfield(Jmd->actmsg[i].subfield);
-        pfree(Jmd->actmsg);
+        free(Jmd->actmsg);
     }
-    pfree(jm->api);
-    pfree((char *)jm->apidata);
+    free(jm->api);
+    free((char *)jm->apidata);
     jm->id = 0L;
-    pfree(jm);
+    free(jm);
 
     return 0;
 }
@@ -845,7 +845,7 @@ static MSGH *JamOpenMsg(MSGA * jm, word mode, dword msgnum)
         }
         else
         {
-            msgh = palloc(sizeof(struct _msgh));
+            msgh = malloc(sizeof(struct _msgh));
             if (msgh == NULL)
             {
                 msgapierr = MERR_NOMEM;
@@ -899,10 +899,10 @@ static sword JamCloseMsg(MSGH * msgh)
     /* Fill the message out to the length that the app said it would be */
 
     msgh->id = 0L;
-    pfree(msgh->ctrl);
-    pfree(msgh->lctrl);
-    pfree(msgh->SubFieldPtr);
-    pfree(msgh);
+    free(msgh->ctrl);
+    free(msgh->lctrl);
+    free(msgh->SubFieldPtr);
+    free(msgh);
 
     return 0;
 }
@@ -934,7 +934,7 @@ static int Jam_OpenTxtFile(JAMBASE * jambase)
 {
     char *txt;
 
-    txt = (char *)palloc(strlen((char *) jambase->BaseName) + 5);
+    txt = (char *)malloc(strlen((char *) jambase->BaseName) + 5);
     strcpy(txt, (char *) jambase->BaseName);
     strcat(txt, EXT_TXTFILE);
     if (jambase->mode == MSGAREA_CREATE)
@@ -946,7 +946,7 @@ static int Jam_OpenTxtFile(JAMBASE * jambase)
         jambase->mode = MSGAREA_CREATE;
         jambase->TxtHandle = opencreatefilejm(txt, fop_cpb, jambase->permissions);
     }
-    pfree(txt);
+    free(txt);
     if (jambase->TxtHandle == -1)
     {
         Jam_CloseFile(jambase);
@@ -1226,7 +1226,7 @@ static sword JamWriteMsg(MSGH * msgh, word append, XMSG * msg,
 
     if (onlytext == NULL)
     {
-        onlytext = palloc(1);
+        onlytext = malloc(1);
         *onlytext = '\0';
     }
 
@@ -1438,7 +1438,7 @@ static sword JamWriteMsg(MSGH * msgh, word append, XMSG * msg,
         Jam_Unlock(jm);
     }                           
 
-    pfree(onlytext);
+    free(onlytext);
 
     return rc;
 }
@@ -1491,7 +1491,7 @@ static sword JamKillMsg(MSGA * jm, dword msgnum)
         dword i;
         for (i = 0; i < Jmd->HdrInfo.ActiveMsgs; i++)
             freejamsubfield(Jmd->actmsg[i].subfield);
-        pfree(Jmd->actmsg);
+        free(Jmd->actmsg);
         Jmd->actmsg_read = 0;
         Jmd->actmsg = NULL;
     }
@@ -1730,10 +1730,10 @@ int JamDeleteBase(char *name)
     int x = strlen(name) + 5;
     int rc = 1;
 
-    hdr = (char *)palloc(x);
-    idx = (char *)palloc(x);
-    txt = (char *)palloc(x);
-    lrd = (char *)palloc(x);
+    hdr = (char *)malloc(x);
+    idx = (char *)malloc(x);
+    txt = (char *)malloc(x);
+    lrd = (char *)malloc(x);
 
     sprintf(hdr, "%s%s", name, EXT_HDRFILE);
     sprintf(txt, "%s%s", name, EXT_TXTFILE);
@@ -1749,10 +1749,10 @@ int JamDeleteBase(char *name)
     if (unlink(lrd))
         rc = 0;
 
-    pfree(hdr);
-    pfree(txt);
-    pfree(idx);
-    pfree(lrd);
+    free(hdr);
+    free(txt);
+    free(idx);
+    free(lrd);
 
     return rc;
 }
@@ -1764,10 +1764,10 @@ static int Jam_OpenFile(JAMBASE * jambase, word * mode, mode_t permissions)
 
     x = strlen((char *) jambase->BaseName) + 5;
 
-    hdr = (char *)palloc(x);
-    idx = (char *)palloc(x);
-    txt = (char *)palloc(x);
-    lrd = (char *)palloc(x);
+    hdr = (char *)malloc(x);
+    idx = (char *)malloc(x);
+    txt = (char *)malloc(x);
+    lrd = (char *)malloc(x);
 
     sprintf(hdr, "%s%s", jambase->BaseName, EXT_HDRFILE);
     sprintf(txt, "%s%s", jambase->BaseName, EXT_TXTFILE);
@@ -1805,10 +1805,10 @@ static int Jam_OpenFile(JAMBASE * jambase, word * mode, mode_t permissions)
         if (*mode != MSGAREA_CRIFNEC)
         {
             Jam_CloseFile(jambase);
-            pfree(hdr);
-            pfree(txt);
-            pfree(idx);
-            pfree(lrd);
+            free(hdr);
+            free(txt);
+            free(idx);
+            free(lrd);
             msgapierr = MERR_NOENT;
             return 0;
         }
@@ -1821,10 +1821,10 @@ static int Jam_OpenFile(JAMBASE * jambase, word * mode, mode_t permissions)
         if (jambase->HdrHandle == -1 || jambase->TxtHandle == -1 || jambase->IdxHandle == -1)
         {
             Jam_CloseFile(jambase);
-            pfree(hdr);
-            pfree(txt);
-            pfree(idx);
-            pfree(lrd);
+            free(hdr);
+            free(txt);
+            free(idx);
+            free(lrd);
             msgapierr = MERR_NOENT;
             return 0;
         }                       
@@ -1841,10 +1841,10 @@ static int Jam_OpenFile(JAMBASE * jambase, word * mode, mode_t permissions)
 
     }                           
 
-    pfree(hdr);
-    pfree(txt);
-    pfree(idx);
-    pfree(lrd);
+    free(hdr);
+    free(txt);
+    free(idx);
+    free(lrd);
 
     jambase->mode = *mode;
     jambase->permissions = permissions;
@@ -1855,12 +1855,12 @@ static int Jam_OpenFile(JAMBASE * jambase, word * mode, mode_t permissions)
 
 static sword MSGAPI Jam_OpenBase(MSGA * jm, word * mode, unsigned char *basename)
 {
-    Jmd->BaseName = (unsigned char *)palloc(strlen((char *) basename) + 1);
+    Jmd->BaseName = (unsigned char *)malloc(strlen((char *) basename) + 1);
     strcpy((char *) Jmd->BaseName, (char *) basename);
 
     if (!Jam_OpenFile(Jmd, mode, FILEMODE(jm->isecho)))
     {
-        pfree(Jmd->BaseName);
+        free(Jmd->BaseName);
         return 0;
     }                           
 
@@ -1911,7 +1911,7 @@ static MSGH *Jam_OpenMsg(MSGA * jm, word mode, dword msgnum)
         }                       
     }
 
-    msgh = palloc(sizeof(struct _msgh));
+    msgh = malloc(sizeof(struct _msgh));
     if (msgh == NULL)
     {
         msgapierr = MERR_NOMEM;
@@ -1951,7 +1951,7 @@ static MSGH *Jam_OpenMsg(MSGA * jm, word mode, dword msgnum)
 
             if (!eqstri((char *)&msgh->Hdr, HEADERSIGNATURE))
             {
-                pfree(msgh);
+                free(msgh);
                 return NULL;
             }
             else
@@ -1974,7 +1974,7 @@ static MSGH *Jam_OpenMsg(MSGA * jm, word mode, dword msgnum)
         }
     }
 
-    pfree(msgh);
+    free(msgh);
     return NULL;
 }
 
@@ -2273,7 +2273,7 @@ static void MSGAPI ConvertXmsgToJamHdr(MSGH * msgh, XMSG * msg, JAMHDRptr jamhdr
     clen = msgh->sq->isecho ? 3 : 5;
     sublen = sizeof(JAMSUBFIELD2LIST) + sizeof(JAMSUBFIELD2) * clen + 37 + 37 + 73 +
         (msgh->sq->isecho ? 0 : 30 * 2);
-    *subfield = palloc(sublen);
+    *subfield = malloc(sublen);
     subfield[0]->arraySize = sublen;
     subfield[0]->subfieldCount = 0;
     subfield[0]->subfield[0].Buffer = (byte *) &(subfield[0]->subfield[clen + 1]);
@@ -2384,7 +2384,7 @@ static void resize_subfields(JAMSUBFIELD2LISTptr * subfield, dword newcount,
     int i;
     JAMSUBFIELD2LISTptr SubField;
 
-    SubField = palloc(len);
+    SubField = malloc(len);
     SubField->arraySize = len;
     SubField->subfieldCount = subfield[0]->subfieldCount;
     if (subfield[0]->subfieldCount == 0)
@@ -2461,7 +2461,7 @@ static unsigned char *DelimText(JAMHDRptr jamhdr,
     {
         if (text[textlen - 1] != '\r')
             textlen++;
-        onlytext = curtext = (unsigned char *)palloc(textlen + 1);
+        onlytext = curtext = (unsigned char *)malloc(textlen + 1);
         *onlytext = '\0';
 
         /* count subfields */
@@ -2622,8 +2622,8 @@ static void DecodeSubf(MSGH * msgh)
     char *ptr, *fmpt, *topt, *pctrl, *plctrl, orig[30], dest[30];
     dword i;
 
-    msgh->ctrl = (unsigned char *)palloc(msgh->SubFieldPtr->arraySize + 65);
-    msgh->lctrl = (unsigned char *)palloc(msgh->SubFieldPtr->arraySize + 65);
+    msgh->ctrl = (unsigned char *)malloc(msgh->SubFieldPtr->arraySize + 65);
+    msgh->lctrl = (unsigned char *)malloc(msgh->SubFieldPtr->arraySize + 65);
     *(msgh->ctrl) = *(msgh->lctrl) = '\0';
     pctrl = (char *) msgh->ctrl;
     plctrl = (char *) msgh->lctrl;

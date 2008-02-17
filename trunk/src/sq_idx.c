@@ -48,8 +48,8 @@ HIDX _SquishOpenIndex(HAREA ha)
 {
     HIDX hix;
 
-    hix = palloc(sizeof(*hix));
-    
+    hix = malloc(sizeof(*hix));
+
     if (hix == NULL)
     {
         msgapierr = MERR_NOMEM;
@@ -196,7 +196,7 @@ int _SquishBeginBuffer(HIDX hix)
 
     /* Allocate memory for the array of segments */
 
-    hix->pss = palloc(sizeof(SQIDXSEG) * (unsigned)hix->cSeg);
+    hix->pss = malloc(sizeof(SQIDXSEG) * (unsigned)hix->cSeg);
     
     if (hix->pss == NULL)
     {
@@ -243,7 +243,7 @@ int _SquishBeginBuffer(HIDX hix)
                 free(hix->pss[i].psqi);
             }
 
-            pfree(hix->pss);
+            free(hix->pss);
 
             msgapierr = MERR_NOMEM;
             hix->fBuffer = 0;
@@ -264,7 +264,7 @@ int _SquishBeginBuffer(HIDX hix)
             }
             while (i--);
 
-            pfree(hix->pss);
+            free(hix->pss);
 
             msgapierr = MERR_BADF;
             hix->fBuffer = 0;
@@ -517,7 +517,7 @@ static int _SquishAppendIndexRecord(HIDX hix, SQIDX * psqi)
      *  reallocate the array of pointers to segments and add a new one.
      */
 
-    pss = palloc(sizeof(SQIDXSEG) * (size_t) (hix->cSeg + 1));
+    pss = malloc(sizeof(SQIDXSEG) * (size_t) (hix->cSeg + 1));
     
     if (pss == NULL)
     {
@@ -695,7 +695,7 @@ unsigned _SquishRemoveIndexEntry(HIDX hix, dword dwMsg, SQIDX * psqiOut,
 
     lseek(HixSqd->ifd, (long)dwMsg * (long)SQIDX_SIZE, SEEK_SET);
 
-    pcBuf = palloc(SHIFT_SIZE);
+    pcBuf = malloc(SHIFT_SIZE);
     
     if (pcBuf == NULL)
     {
@@ -720,7 +720,7 @@ unsigned _SquishRemoveIndexEntry(HIDX hix, dword dwMsg, SQIDX * psqiOut,
         lseek(HixSqd->ifd, (long)SQIDX_SIZE, SEEK_CUR);
     }
 
-    pfree(pcBuf);
+    free(pcBuf);
 
     /*
      *  Now write the last entry to stomp over the index element that is
@@ -761,7 +761,7 @@ unsigned _SquishCloseIndex(HIDX hix)
 
     hix->id = 0;
 
-    pfree(hix);
+    free(hix);
 
     return TRUE;
 }
@@ -855,7 +855,7 @@ int _SquishEndBuffer(HIDX hix)
         free(hix->pss[i].psqi);
     }
 
-    pfree(hix->pss);
+    free(hix->pss);
     hix->cSeg = 0;
 
     return rc;
@@ -891,7 +891,7 @@ int _SquishFreeBuffer(HIDX hix)
         free(hix->pss[i].psqi);
     }
 
-    pfree(hix->pss);
+    free(hix->pss);
     hix->cSeg = 0;
 
     return rc;

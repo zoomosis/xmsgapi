@@ -39,7 +39,7 @@ static HMSG NewHmsg(HAREA ha, word wMode)
 
     /* Allocate memory for the message handle */
 
-    hmsg = palloc(sizeof *hmsg);
+    hmsg = malloc(sizeof *hmsg);
     
     if (hmsg == NULL)
     {
@@ -644,7 +644,7 @@ HMSG apiSquishOpenMsg(HAREA ha, word wMode, dword dwMsg)
     {
         /* Otherwise, free memory and get out */
 
-        pfree(hmsg);
+        free(hmsg);
         hmsg = NULL;
     }
 
@@ -748,7 +748,7 @@ sword apiSquishCloseMsg(HMSG hmsg)
 
     /* Deallocate memory and return to caller */
 
-    pfree(hmsg);
+    free(hmsg);
     return 0;
 }
 
