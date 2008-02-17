@@ -24,14 +24,16 @@ int main(int argc, char **argv)
 
     if (argc < 6)
     {
-        printf("Format:  sqconver <from_name> <from_type> <to_name>  <to_type> <default_zone>\n");
-        printf("Example: sqconver /msg/foo    *.msg       /msg/foosq squish    3\n");
+        puts(
+	  "Format:  sqconver <from_name> <from_type> <to_name>  <to_type> <default_zone>\n"
+          "Example: sqconver /msg/foo    *.msg       /msg/foosq squish    3\n"
+	);
         return EXIT_FAILURE;
     }
 
     printf("Converting area %s...\n", argv[1]);
 
-    if (stricmp(argv[2], "*.msg") == 0)
+    if (stricmp(argv[2], "*.msg") == 0 || stricmp(argv[2], "sdm") == 0)
     {
         t1 = MSGTYPE_SDM;
     }
@@ -58,14 +60,13 @@ int main(int argc, char **argv)
     
     if (in_area == NULL)
     {
-        printf("Error opening area `%s' (type %s) for read!\n",
-          argv[1], argv[2]);
+        printf("Error opening area `%s' (type %s) for read!\n", argv[1], argv[2]);
         return EXIT_FAILURE;
     }
 
     MsgLock(in_area);
 
-    if (stricmp(argv[4], "*.msg") == 0)
+    if (stricmp(argv[4], "*.msg") == 0 || stricmp(argv[4], "sdm") == 0)
     {
         t2 = MSGTYPE_SDM;
     }
@@ -88,8 +89,7 @@ int main(int argc, char **argv)
 
     if (out_area == NULL)
     {
-        printf("Error opening area `%s' (type %s) for write!\n",
-          argv[3], argv[4]);
+        printf("Error opening area `%s' (type %s) for write!\n", argv[3], argv[4]);
         return EXIT_FAILURE;
     }
 
@@ -142,8 +142,7 @@ int main(int argc, char **argv)
         msg.replyto = 0L;
         memset(msg.replies, '\0', sizeof(msg.replies));
 
-        MsgWriteMsg(out_msg, FALSE, &msg, NULL, 0L, MsgGetTextLen(in_msg),
-          ctrllen, ctrl);
+        MsgWriteMsg(out_msg, FALSE, &msg, NULL, 0L, MsgGetTextLen(in_msg), ctrllen, ctrl);
 
         for (offset = 0L; offset < MsgGetTextLen(in_msg);)
         {
@@ -154,8 +153,7 @@ int main(int argc, char **argv)
                 break;
             }
 
-            MsgWriteMsg(out_msg, TRUE, NULL, buffer, got,
-            MsgGetTextLen(in_msg), 0L, NULL);
+            MsgWriteMsg(out_msg, TRUE, NULL, buffer, got, MsgGetTextLen(in_msg), 0L, NULL);
 
             offset += got;
         }
@@ -174,8 +172,7 @@ int main(int argc, char **argv)
     MsgCloseArea(in_area);
     MsgCloseApi();
 
-    printf("\nDone!\n");
+    puts("\nDone!");
 
     return EXIT_SUCCESS;
 }
-
