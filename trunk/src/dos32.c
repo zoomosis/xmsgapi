@@ -37,14 +37,14 @@
 
 /*
  *  This is the nice code that works on UNIX and every other decent
- *  platform.  It has been contributed by Alex S. Aganichev
+ *  platform.  It has been contributed by Alex S. Aganichev.
  */
 
 int fexist(const char *filename)
 {
     struct stat s;
 
-    if (stat(filename, &s))
+    if (stat(filename, &s) != 0)
     {
         return FALSE;
     }
@@ -56,7 +56,7 @@ long fsize(const char *filename)
 {
     struct stat s;
 
-    if (stat(filename, &s))
+    if (stat(filename, &s) != 0)
     {
         return -1L;
     }
@@ -109,7 +109,7 @@ int direxist(const char *directory)
 
     free(tempstr);
 
-    if (rc)
+    if (rc != 0)
     {
         return FALSE;
     }
@@ -123,7 +123,7 @@ int _createDirectoryTree(const char *pathName)
     char limiter = PATH_DELIM;
     int i;
 
-    start = (char *)malloc(strlen(pathName) + 2);
+    start = malloc(strlen(pathName) + 2);
     strcpy(start, pathName);
 
     i = strlen(start) - 1;
