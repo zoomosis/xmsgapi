@@ -331,7 +331,7 @@ byte *CopyToControlBuf(byte * txt, byte ** newtext, unsigned *length)
 
 #define SAFE_CLEN 20
 
-    cbuf = palloc(clen + SAFE_CLEN);
+    cbuf = malloc(clen + SAFE_CLEN);
     if (cbuf == NULL)
     {
         return NULL;
@@ -391,7 +391,7 @@ byte *GetCtrlToken(byte * where, byte * what)
         end = where + strlen((char *)where);
     }
 
-    out = palloc((size_t) (end - where) + 1);
+    out = malloc((size_t) (end - where) + 1);
 
     if (out == NULL)
     {
@@ -683,7 +683,7 @@ void ConvertControlInfo(byte * ctrl, NETADDR * orig, NETADDR * dest)
         Parse_NetNode((char *)s, &norig.zone, &norig.net, &norig.node,
           &norig.point);
 
-        pfree(p);
+        free(p);
 
         /* 
          *  Only use this as the "real" zonegate address if the net/node
@@ -706,7 +706,7 @@ void ConvertControlInfo(byte * ctrl, NETADDR * orig, NETADDR * dest)
     if (s != NULL)
     {
         orig->point = (word) atoi((char *)s + 5);
-        pfree(s);
+        free(s);
     }
 
     /* Handle TOPT too */
@@ -716,7 +716,7 @@ void ConvertControlInfo(byte * ctrl, NETADDR * orig, NETADDR * dest)
     if (s != NULL)
     {
         dest->point = (word) atoi((char *)s + 5);
-        pfree(s);
+        free(s);
     }
 }
 
@@ -749,7 +749,7 @@ byte *CvtCtrlToKludge(byte * ctrl)
 
     clen = strlen((char *)ctrl) + NumKludges((char *)ctrl) + 20;
 
-    buf = palloc(clen);
+    buf = malloc(clen);
 
     if (buf == NULL)
     {

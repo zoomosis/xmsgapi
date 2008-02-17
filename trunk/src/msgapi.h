@@ -287,9 +287,6 @@ extern "C"
 
     extern struct _minf mi;
 
-#define palloc(s)     malloc(s)
-#define pfree(s)      free(s)
-
 /* Constants for 'type' argument of MsgUidToMsgn() */
 
 #define UID_EXACT     0x00

@@ -374,7 +374,7 @@ static HAREA NewHarea(word wType)
 
     /* Try to allocate memory for the area handle */
 
-    ha = (HAREA) palloc(sizeof(*ha));
+    ha = malloc(sizeof(*ha));
     
     if (ha == NULL)
     {
@@ -417,11 +417,11 @@ HAREA MSGAPI SquishOpenArea(byte * szName, word wMode, word wType)
 
     /* Allocate memory for the Squish-specific part of the handle */
 
-    ha->apidata = (void *)palloc(sizeof(struct _sqdata));
+    ha->apidata = malloc(sizeof(struct _sqdata));
     
     if (ha->apidata == NULL)
     {
-        pfree(ha);
+        free(ha);
         return NULL;
     }
 
@@ -429,12 +429,12 @@ HAREA MSGAPI SquishOpenArea(byte * szName, word wMode, word wType)
 
     /* Allocate memory to hold the function pointers */
 
-    ha->api = (struct _apifuncs *)palloc(sizeof(struct _apifuncs));
+    ha->api = malloc(sizeof(struct _apifuncs));
     
     if (ha->api == NULL)
     {
-        pfree(ha->apidata);
-        pfree(ha);
+        free(ha->apidata);
+        free(ha);
         return NULL;
     }
 
@@ -485,9 +485,9 @@ HAREA MSGAPI SquishOpenArea(byte * szName, word wMode, word wType)
     }
     else
     {
-        pfree(ha->apidata);
-        pfree(ha->api);
-        pfree(ha);
+        free(ha->apidata);
+        free(ha->api);
+        free(ha);
 
         return NULL;
     }
@@ -617,13 +617,13 @@ sword apiSquishCloseArea(HAREA ha)
 #ifdef ALTLOCKING
     if (ha->lck_path)
     {
-        pfree(ha->lck_path);
+        free(ha->lck_path);
     }
 #endif
 
-    pfree(ha->api);
-    pfree(ha->apidata);
-    pfree(ha);
+    free(ha->api);
+    free(ha->apidata);
+    free(ha);
 
     return 0;
 }

@@ -143,7 +143,7 @@ MSGA *MSGAPI SdmOpenArea(byte * name, word mode, word type)
 {
     MSGA *mh;
 
-    mh = palloc(sizeof(MSGA));
+    mh = malloc(sizeof(MSGA));
 
     if (mh == NULL)
     {
@@ -160,7 +160,7 @@ MSGA *MSGAPI SdmOpenArea(byte * name, word mode, word type)
         mh->isecho = TRUE;
     }
 
-    mh->api = (struct _apifuncs *)palloc(sizeof(struct _apifuncs));
+    mh->api = malloc(sizeof(struct _apifuncs));
 
     if (mh->api == NULL)
     {
@@ -170,7 +170,7 @@ MSGA *MSGAPI SdmOpenArea(byte * name, word mode, word type)
 
     memset(mh->api, '\0', sizeof(struct _apifuncs));
 
-    mh->apidata = (void *)palloc(sizeof(struct _sdmdata));
+    mh->apidata = malloc(sizeof(struct _sdmdata));
 
     if (mh->apidata == NULL)
     {
@@ -217,13 +217,13 @@ ErrOpen:
         {
             if (mh->apidata)
             {
-                pfree((char *)mh->apidata);
+                free((char *)mh->apidata);
             }
 
-            pfree(mh->api);
+            free(mh->api);
         }
 
-        pfree(mh);
+        free(mh);
     }
 
     return NULL;
@@ -319,14 +319,14 @@ static sword SdmCloseArea(MSGA * mh)
 
     if (Mhd->msgnum)
     {
-        pfree(Mhd->msgnum);
+        free(Mhd->msgnum);
     }
 
-    pfree((char *)mh->apidata);
-    pfree(mh->api);
+    free((char *)mh->apidata);
+    free(mh->api);
 
     mh->id = 0L;
-    pfree(mh);
+    free(mh);
 
     msgapierr = MERR_NONE;
     return 0;
@@ -413,7 +413,7 @@ static MSGH *SdmOpenMsg(MSGA * mh, word mode, dword msgnum)
 
                     if (Mhd->msgnum && Mhd->msgnum_len)
                     {
-                        pfree(Mhd->msgnum);
+                        free(Mhd->msgnum);
                     }
 
                     if (!_SdmRescanArea(mh))
@@ -478,7 +478,7 @@ static MSGH *SdmOpenMsg(MSGA * mh, word mode, dword msgnum)
 
     mh->cur_msg = msgnum;
 
-    msgh = palloc(sizeof(MSGH));
+    msgh = malloc(sizeof(MSGH));
 
     if (msgh == NULL)
     {
@@ -501,7 +501,7 @@ static MSGH *SdmOpenMsg(MSGA * mh, word mode, dword msgnum)
 
             if (!Mhd->msgnum)
             {
-                pfree(msgh);
+                free(msgh);
                 close(handle);
                 msgapierr = MERR_NOMEM;
                 return NULL;
@@ -576,14 +576,14 @@ static sword SdmCloseMsg(MSGH * msgh)
 
     if (msgh->ctrl)
     {
-        pfree(msgh->ctrl);
+        free(msgh->ctrl);
         msgh->ctrl = NULL;
     }
 
     close(msgh->fd);
 
     msgh->id = 0L;
-    pfree(msgh);
+    free(msgh);
 
     msgapierr = MERR_NONE;
     return 0;
@@ -751,8 +751,8 @@ static dword SdmReadMsg(MSGH * msgh, XMSG * msg, dword offset, dword bytes, byte
         struct stat st;
 
         fstat(msgh->fd, &st);
-
-        text = fake_msgbuf = palloc(st.st_size - OMSG_SIZE + 1);
+	fake_msgbuf = malloc(st.st_size - OMSG_SIZE + 1);
+	text = fake_msgbuf;
 
         if (text == NULL)
         {
@@ -837,7 +837,7 @@ static dword SdmReadMsg(MSGH * msgh, XMSG * msg, dword offset, dword bytes, byte
 
     if (fake_msgbuf)
     {
-        pfree(fake_msgbuf);
+        free(fake_msgbuf);
         got = 0;
     }
 
@@ -1008,7 +1008,7 @@ static sword SdmWriteMsg(MSGH * msgh, word append, XMSG * msg, byte * text, dwor
             int ret;
 
             ret = write(msgh->fd, s, sl_s);
-            pfree(s);
+            free(s);
             if (ret != (int)sl_s)
             {
                 msgapierr = MERR_NODS;
@@ -1376,7 +1376,7 @@ static sword _SdmRescanArea(MSGA * mh)
 
     mh->num_msg = 0;
 
-    Mhd->msgnum = palloc(SDM_BLOCK * sizeof(unsigned));
+    Mhd->msgnum = malloc(SDM_BLOCK * sizeof(unsigned));
 
     if (Mhd->msgnum == NULL)
     {
