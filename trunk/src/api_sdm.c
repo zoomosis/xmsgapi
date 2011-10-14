@@ -31,15 +31,14 @@
 #include <dos.h>
 #endif
 
-#if defined(__TURBOC__) || defined(__WATCOMC__) || defined(_MSC_VER) || defined(__LCC__)
-#include <direct.h>
-#endif
-
 #ifdef __UNIX__
 #include <unistd.h>
 #else
 #include <io.h>
 #include <share.h>
+#if defined(__TURBOC__) || defined(__WATCOMC__) || defined(_MSC_VER) || defined(__LCC__)
+#include <direct.h>
+#endif
 #endif
 
 #ifdef DJGPP

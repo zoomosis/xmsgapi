@@ -6,6 +6,7 @@
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <unistd.h>
 
 #include "compiler.h"
 #include "prog.h"
@@ -349,7 +350,11 @@ void tdelay(int msecs)
 
 void tdelay(int msecs)
 {
+#ifdef __WATCOMC__
+    /* noop - Watcom C 1.9's usleep() is missing in Linux! */
+#else
     usleep(msecs * 1000L);
+#endif
 }
 
 #endif
