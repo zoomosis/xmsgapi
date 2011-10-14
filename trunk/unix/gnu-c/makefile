@@ -4,9 +4,9 @@
 # If you can get it to work with BSD make, send me the changes!
 
 CC=gcc
-CFLAGS=-pipe -W -Wall -c
-#CDEFS=-DUNIX -DMSGAPI_NO_JAM
-CDEFS=-DUNIX
+CFLAGS=-pipe -m32 -W -Wall -c
+CDEFS=-DUNIX -DMSGAPI_NO_JAM
+#CDEFS=-DUNIX -I../../../jamlib
 COPT=-O2 -g
 LIB=ar
 RANLIB=ranlib
@@ -28,4 +28,3 @@ $(TARGET): $(OBJS)
 
 clean:
 	rm -f *.o $(TARGET)
-
