@@ -53,7 +53,7 @@ extern "C"
 #ifdef __UNIX__
 #define SH_DENYNONE 0
 #define sopen(a, b, c, d)  open((a), (b), (d))
-#ifndef __sun__
+#if !defined(__sun__) && !defined(__WATCOMC__)
 #define tell(a)  lseek((a), 0, SEEK_CUR)
 #endif
 #ifndef O_BINARY
