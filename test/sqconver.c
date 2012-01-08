@@ -107,7 +107,7 @@ int main(int argc, char **argv)
     {
         if ((msgn % 5) == 0)
         {
-            printf("Msg: %ld\r", msgn);
+            printf("Msg: %d\r", (int) msgn);
         }
 
         in_msg = MsgOpenMsg(in_area, MOPEN_READ, msgn);
@@ -121,7 +121,7 @@ int main(int argc, char **argv)
 
         if (out_msg == NULL)
         {
-            printf("Error writing to output area; msg#%ld (%d).\n", msgn, msgapierr);
+            printf("Error writing to output area; msg#%d (%d).\n", (int) msgn, msgapierr);
             MsgCloseMsg(in_msg);
             continue;
         }
