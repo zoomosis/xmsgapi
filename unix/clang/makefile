@@ -3,7 +3,7 @@
 # If you can get it to work with BSD make, send me the changes!
 
 CC=clang
-CFLAGS=-pipe -m32 -W -Wall -c
+CFLAGS=-pipe -W -Wall -c
 CDEFS=-DUNIX -DMSGAPI_NO_JAM
 #CDEFS=-DUNIX -I../../../jamlib
 COPT=-O2 -g
