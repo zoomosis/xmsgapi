@@ -1,9 +1,8 @@
-# XMSGAPI library makefile
+# XMSGAPI library makefile for GNU C (or compatible)
 # GNU C (generic)
 # Requires GNU Make.
 # If you can get it to work with BSD make, send me the changes!
 
-CC=gcc
 CFLAGS=-pipe -W -Wall -c
 CDEFS=-DUNIX -DMSGAPI_NO_JAM
 #CDEFS=-DUNIX -I../../../jamlib
