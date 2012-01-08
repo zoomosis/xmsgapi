@@ -30,7 +30,7 @@ typedef unsigned int bits;
 typedef word bits;
 #endif
 
-#ifdef __alpha
+#if defined(__alpha) || defined(__x86_64__)
 /* add other 64 bit systems here */
 typedef unsigned int dword;
 typedef signed int sdword;
