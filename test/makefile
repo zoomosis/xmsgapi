@@ -1,5 +1,4 @@
-CC=gcc
-CFLAGS=-W -Wall
+CFLAGS=-W -Wall -g
 
 # Use SMAPI
 #COPT=-DUSE_JAM -DUSE_SMAPI
@@ -21,7 +20,7 @@ sqconver: sqconver.c
 packtest: packtest.c
 	$(CC) $(COPT) $(CINC) $(CFLAGS) -o packtest packtest.c
 
+all: sqconver packtest
+
 clean:
-	rm -f *.o
-	rm -f sqconver sqconver.exe
-	rm -f packtest packtest.exe
+	rm -f *.o sqconver packtest
