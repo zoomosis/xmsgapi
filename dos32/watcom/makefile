@@ -3,7 +3,7 @@
 # Use wmake -ms
 
 CC=wcl386
-CFLAGS=-zq -wx -bt=dos4g -l=dos4g
+CFLAGS=-zq -wx -bt=dos -l=dos4g
 CDEFS=-D__DOS__ -D__LITTLE_ENDIAN__ -DMSGAPI_NO_JAM
 COPT=-oneatx
 LIB=wlib
