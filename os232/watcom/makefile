@@ -3,7 +3,7 @@
 # Use wmake -ms
 
 CC=wcl386
-CFLAGS=-zq -wx -bt=os2v2 -l=os2v2
+CFLAGS=-zq -wx -bt=os2 -l=os2v2
 CDEFS=-D__OS2__ -D__LITTLE_ENDIAN__ -DMSGAPI_NO_JAM
 COPT=-oneatx
 LIB=wlib
