@@ -1,4 +1,4 @@
-== XMSGAPI; eXtended MSGAPI ==
+## XMSGAPI; eXtended MSGAPI
 
 Squish MSGAPI is copyright Scott J. Dudley.  All rights reserved.
 Modifications released to the public domain.
@@ -30,12 +30,13 @@ you proceed to use any of the source files in this archive without
 having accepted the terms of the MSGAPI licensing agreement, or such
 other agreement as you are able to reach with the author.
 
-===Trademarks===
+
+## Trademarks
 
 Squish, SquishMail and Maximus are trademarks of Scott J. Dudley.
 
 
-===Release notes===
+## Release notes
 
 This is the first release of XMSGAPI.  Some new bugs may be introduced.
 SDM support has not been tested thoroughly.
@@ -48,6 +49,6 @@ yet possible to generate a DLL of the XMSGAPI.  These issues may be
 corrected in a future release.
 
 
-===Installation===
+## Installation
 
 See the file INSTALL for compilation and installation instructions.
