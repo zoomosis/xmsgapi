@@ -1,4 +1,4 @@
-==XMSGAPI; eXtended MSGAPI==
+== XMSGAPI; eXtended MSGAPI ==
 
 Squish MSGAPI is copyright Scott J. Dudley.  All rights reserved.
 Modifications released to the public domain.
